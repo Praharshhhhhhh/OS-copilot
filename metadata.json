@@ -1,0 +1,6 @@
+{
+  "name": "Open Source Contributor Dashboard",
+  "description": "An AI-powered dashboard that helps students find open-source issues and drafts code solutions for them to review and submit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
