@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import cookieParser from "cookie-parser";
 import Groq from "groq-sdk";
 import { Octokit } from "@octokit/rest";
@@ -26,8 +25,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 
-async function startServer() {
-  // === OAuth Routes ===
+// Main server initialization
+
+// === OAuth Routes ===
   
   // 1. Return URL for frontend to open in popup
   app.get("/api/auth/url", (req, res) => {
@@ -404,8 +404,10 @@ Provide the response strictly in this format using Markdown:
     }
   });
 
-  // === Vite Middleware for Development ===
+// === Setup and Start ===
+async function setupViteAndStart() {
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -427,6 +429,6 @@ Provide the response strictly in this format using Markdown:
   }
 }
 
-startServer();
+setupViteAndStart();
 
 export default app;
