@@ -20,7 +20,7 @@ function getRedirectUri(req: express.Request) {
 }
 
 export const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 app.use(express.json());
 app.use(cookieParser());

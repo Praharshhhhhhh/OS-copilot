@@ -48,6 +48,18 @@ export default function App() {
   const handleLogin = async () => {
     try {
       const res = await fetch('/api/auth/url');
+      
+      if (!res.ok) {
+        let errorMessage = "Failed to fetch auth url";
+        try {
+          const errorData = await res.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch (e) {
+          errorMessage = `HTTP error ${res.status}`;
+        }
+        throw new Error(errorMessage);
+      }
+
       const data = await res.json();
       if (data.url) {
         const authWindow = window.open(data.url, 'oauth_popup', 'width=600,height=700');
@@ -55,9 +67,9 @@ export default function App() {
           alert('Please allow popups to connect your GitHub account.');
         }
       }
-    } catch (err) {
-      console.error(err);
-      alert("Error initializing OAuth login");
+    } catch (err: any) {
+      console.error("Login error:", err);
+      alert("Error initializing OAuth login: " + (err.message || "Unknown error"));
     }
   };
 
