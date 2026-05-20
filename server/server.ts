@@ -40,6 +40,7 @@ app.use(cookieParser());
       redirect_uri: redirectUri,
       scope: "repo user",
       state: "github_auth",
+      prompt: "consent",
     });
     const authUrl = `https://github.com/login/oauth/authorize?${params.toString()}`;
     res.json({ url: authUrl });
